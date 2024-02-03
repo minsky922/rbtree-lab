@@ -13,7 +13,7 @@ rbtree *new_rbtree(void)
 
 void delete_rbtree(rbtree *t) 
 {
-  
+  free(t->nil);
   free(t);
 }
 
