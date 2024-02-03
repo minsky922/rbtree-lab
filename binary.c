@@ -97,6 +97,24 @@ int main()
 	}
 	return 0;
 }
+int getTreeNodeCount(treeNode* t)
+{
+	if (t != NULL)
+		//return 자신의 개수 + 왼쪽 자식의 개수 + 오른쪽 자식의 개수
+		return 1 + getTreeNodeCount(t->left) + getTreeNodeCount(t->right);
+
+	return 0; //NULL인 경우는 개수 없음
+}
+
+int getTreeNodeSum(treeNode* t)
+{
+	if (t != NULL)
+		//return 자신 노드의 값 + 왼쪽 자식의 노드의 합 + 오른쪽 자식 노드의 합
+		return t->value + getTreeNodeSum(t->left) + getTreeNodeSum(t->right);
+
+	return 0; //NULL인 경우는 합이 없음
+}
+
 
 void displayTreeInorder(treeNode* t)
 {
@@ -168,6 +186,8 @@ treeNode* getMinNode(treeNode* t)
 
 treeNode* removeNode(treeNode* t, int target)
 {
+    treeNode* temp;
+
     if (t->value == target)
     {
         //노드를 삭제하는 코드
@@ -177,6 +197,14 @@ treeNode* removeNode(treeNode* t, int target)
             printf("\n\n\t\t1. 자식 노드가 없는 경우\n");
             return NULL;
         }
+    //2.왼쪽 자식만 있어??
+		else if (t->right == NULL)
+		{
+			temp = t->left;
+			free(t);
+			printf("\n\n\t\t2. 왼쪽 자식만 있는 경우\n");
+			return temp; //부모에게 자식의 주소값을 리턴
+		}
         else if (t->left == NULL) //case2. 오른쪽 자식 노드만 있는 경우
         {
             temp = t->right;
@@ -202,5 +230,5 @@ treeNode* removeNode(treeNode* t, int target)
     {
         removeNode(t->right, target); //재귀호출
     }
-    return nullptr;
+    return t;
 }
