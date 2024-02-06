@@ -10,7 +10,7 @@ node_t *get_next_node(const rbtree *t, node_t *p);
 void rbtree_erase_fixup(rbtree *t, node_t *parent, int is_left);
 void exchange_color(node_t *a, node_t *b);
 
-/* 1️⃣ RB tree 구조체 생성 */
+/* 1. RB tree 구조체 생성 */
 // 새 트리를 생성하는 함수
 rbtree *new_rbtree(void)
 {
@@ -27,7 +27,7 @@ rbtree *new_rbtree(void)
   return t;
 }
 
-/* 2️⃣ RB tree 구조체가 차지했던 메모리 반환 */
+/* 2️. RB tree 구조체가 차지했던 메모리 반환 */
 // 트리를 순회하면서 각 노드의 메모리를 반환하는 함수
 void delete_rbtree(rbtree *t)
 {
@@ -51,7 +51,7 @@ void traverse_and_delete_node(rbtree *t, node_t *node)
   free(node);
 }
 
-/* 3️⃣ key 추가 */
+/* 3️. key 추가 */
 // 노드를 삽입하고 불균형을 복구하는 함수
 node_t *rbtree_insert(rbtree *t, const key_t key)
 {
@@ -209,7 +209,7 @@ void left_rotate(rbtree *t, node_t *node)
   node_left->parent = parent;  // 3-2) 노드의 자식을 부모의 자식으로 변경 (양방향 연결)
 }
 
-/* 4️⃣ 탐색 1 - key 탐색 */
+/* 4️. 탐색 1 - key 탐색 */
 // key에 해당하는 노드를 반환하는 함수
 node_t *rbtree_find(const rbtree *t, const key_t key)
 {
@@ -224,7 +224,7 @@ node_t *rbtree_find(const rbtree *t, const key_t key)
   return NULL; // 해당 key값을 가진 노드가 없을 경우 NULL 반환
 }
 
-/* 4️⃣ 탐색 2 - 최소값을 가진 node 탐색 */
+/* 4️. 탐색 2 - 최소값을 가진 node 탐색 */
 // key가 최소값에 해당하는 노드를 반환하는 함수
 node_t *rbtree_min(const rbtree *t)
 {
@@ -234,7 +234,7 @@ node_t *rbtree_min(const rbtree *t)
   return current;
 }
 
-/* 4️⃣ 탐색 3 - 최대값을 가진 node 탐색 */
+/* 4️. 탐색 3 - 최대값을 가진 node 탐색 */
 // key가 최대값에 해당하는 노드를 반환하는 함수
 node_t *rbtree_max(const rbtree *t)
 {
@@ -244,7 +244,7 @@ node_t *rbtree_max(const rbtree *t)
   return current;
 }
 
-/* 5️⃣ array로 변환 */
+/* 5️. array로 변환 */
 // `t`를 inorder로 `n`번 순회한 결과를 `arr`에 담는 함수
 int rbtree_to_array(const rbtree *t, key_t *arr, const size_t n)
 {
@@ -262,7 +262,7 @@ int rbtree_to_array(const rbtree *t, key_t *arr, const size_t n)
   return 0;
 }
 
-/* 6️⃣ node 삭제 */
+/* 6️. node 삭제 */
 // 노드를 삭제하는 함수
 int rbtree_erase(rbtree *t, node_t *delete)
 {
