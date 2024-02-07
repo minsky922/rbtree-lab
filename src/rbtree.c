@@ -212,62 +212,62 @@ void rbtree_transplant(rbtree *t, node_t *u, node_t *v) {
 }
 
 void rbtree_delete_fixup(rbtree *t, node_t *x) {
-  node_t *w = NULL; // x의 형제 //x가 extra black // w는 형제
+  node_t *sibling = NULL; // x의 형제 //x가 extra black // w는 형제
   while (x != t->root && x->color == RBTREE_BLACK) {
     if (x == x->parent->left) {
-      w = x->parent->right;
-      if (w->color == RBTREE_RED) { // 형제가 붉은 색이면(경우 1)
-        w->color = RBTREE_BLACK;
+      sibling = x->parent->right;
+      if (sibling->color == RBTREE_RED) { // 형제가 붉은 색이면(경우 1)
+        sibling->color = RBTREE_BLACK;
         x->parent->color = RBTREE_RED;
         left_rotate(t, x->parent);
-        w = x->parent->right;
+        sibling = x->parent->right;
       }
-      if (w->left->color == RBTREE_BLACK && w->right->color == RBTREE_BLACK) { // 형제가 모두 블랙 & 자녀가 모두 블랙 (경우2)
-        w->color = RBTREE_RED;
+      if (sibling->left->color == RBTREE_BLACK && sibling->right->color == RBTREE_BLACK) { // 형제가 모두 블랙 & 자녀가 모두 블랙 (경우2)
+        sibling->color = RBTREE_RED;
         x = x->parent;
       }
       else {
-        if (w->right->color == RBTREE_BLACK) { //(경우3)
-          w->left->color = RBTREE_BLACK;
-          w->color = RBTREE_RED;
-          right_rotate(t, w);
-          w = x->parent->right;
+        if (sibling->right->color == RBTREE_BLACK) { //(경우3)
+          sibling->left->color = RBTREE_BLACK;
+          sibling->color = RBTREE_RED;
+          right_rotate(t, sibling);
+          sibling = x->parent->right;
         } //(경우4)
-        w->color = x->parent->color; 
+        sibling->color = x->parent->color; 
         x->parent->color = RBTREE_BLACK;
-        w->right->color = RBTREE_BLACK;
+        sibling->right->color = RBTREE_BLACK;
         left_rotate(t, x->parent);
         x = t->root;
       }
     }
     else { // x가 부모의 오른쪽 자식이면
-      w = x->parent->left;
-      if (w->color == RBTREE_RED) { // 형제가 붉은 색이면(경우 1)
-        w->color = RBTREE_BLACK;
+      sibling = x->parent->left;
+      if (sibling->color == RBTREE_RED) { // 형제가 붉은 색이면(경우 1)
+        sibling->color = RBTREE_BLACK;
         x->parent->color = RBTREE_RED;
         right_rotate(t, x->parent);
-        w = x->parent->left;
+        sibling = x->parent->left;
       }
-      if (w->right->color == RBTREE_BLACK && w->left->color == RBTREE_BLACK) {
-        w->color = RBTREE_RED;
+      if (sibling->right->color == RBTREE_BLACK && sibling->left->color == RBTREE_BLACK) {
+        sibling->color = RBTREE_RED;
         x = x->parent;
       }
       else {
-        if (w->left->color == RBTREE_BLACK) {
-          w->right->color = RBTREE_BLACK;
-          w->color = RBTREE_RED;
-          left_rotate(t, w);
-          w = x->parent->left;
+        if (sibling->left->color == RBTREE_BLACK) {
+          sibling->right->color = RBTREE_BLACK;
+          sibling->color = RBTREE_RED;
+          left_rotate(t, sibling);
+          sibling = x->parent->left;
         }
-        w->color = x->parent->color;
+        sibling->color = x->parent->color;
         x->parent->color = RBTREE_BLACK;
-        w->left->color = RBTREE_BLACK;
+        sibling->left->color = RBTREE_BLACK;
         right_rotate(t, x->parent);
         x = t->root;
       }
     }
   }
-  x->color = RBTREE_BLACK; // 루트색 설정
+  x->color = RBTREE_BLACK; // 루트색
 }
 
 // 삭제할 노드의 포인터를 받아서 rb트리 구조를 유지하며 해당 키 삭제
